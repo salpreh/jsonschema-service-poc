@@ -1,1 +1,12 @@
+spring:
+  data.web.pageable.default-page-size: 10
 
+  datasource:
+    url: jdbc:postgresql://localhost:5432/jvalidator
+    username: root
+    password: password
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
