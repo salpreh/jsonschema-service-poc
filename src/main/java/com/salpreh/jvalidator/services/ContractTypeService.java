@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class ContractTypeService {
   private final ContractTypeRepository contractTypeRepository;
+  private final JsonValidatorService jsonValidatorService;
   private final ModelMapper modelMapper;
 
   public Page<ContractTypeDto> getAll(Pageable pageable) {
@@ -29,6 +30,7 @@ public class ContractTypeService {
 
   public ContractTypeDto create(UpsertContractTypeDto createCommand) {
     ContractTypeEntity createEntity = modelMapper.map(createCommand, ContractTypeEntity.class);
+    jsonValidatorService.validateSchema(createEntity.getSchema());
     createEntity = contractTypeRepository.save(createEntity);
 
     return modelMapper.map(createEntity, ContractTypeDto.class);
@@ -37,6 +39,7 @@ public class ContractTypeService {
   public ContractTypeDto update(long id, UpsertContractTypeDto updateCommand) {
     ContractTypeEntity updateEntity = modelMapper.map(updateCommand, ContractTypeEntity.class);
     updateEntity.setId(id);
+    jsonValidatorService.validateSchema(updateEntity.getSchema());
     updateEntity = contractTypeRepository.save(updateEntity);
 
     return modelMapper.map(updateEntity, ContractTypeDto.class);
