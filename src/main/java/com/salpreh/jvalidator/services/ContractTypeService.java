@@ -3,6 +3,7 @@ package com.salpreh.jvalidator.services;
 import com.salpreh.jvalidator.dtos.ContractTypeDto;
 import com.salpreh.jvalidator.dtos.UpsertContractTypeDto;
 import com.salpreh.jvalidator.entities.ContractTypeEntity;
+import com.salpreh.jvalidator.exceptions.NotFoundException;
 import com.salpreh.jvalidator.repositories.ContractTypeRepository;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -37,6 +38,8 @@ public class ContractTypeService {
   }
 
   public ContractTypeDto update(long id, UpsertContractTypeDto updateCommand) {
+    if (!contractTypeRepository.existsById(id)) throw new NotFoundException("Contract type not found");
+
     ContractTypeEntity updateEntity = modelMapper.map(updateCommand, ContractTypeEntity.class);
     updateEntity.setId(id);
     jsonValidatorService.validateSchema(updateEntity.getSchema());

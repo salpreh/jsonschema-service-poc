@@ -3,7 +3,7 @@ package com.salpreh.jvalidator.exceptions;
 import com.networknt.schema.ValidationMessage;
 import java.util.Set;
 
-public class SchemaValidationException extends RuntimeException {
+public class SchemaValidationException extends ValidationException {
 
   private Set<ValidationMessage> messages;
 
@@ -16,6 +16,7 @@ public class SchemaValidationException extends RuntimeException {
   }
 
   public SchemaValidationException(String message, Set<ValidationMessage> messages) {
+    super(message);
     this.messages = messages;
   }
 
