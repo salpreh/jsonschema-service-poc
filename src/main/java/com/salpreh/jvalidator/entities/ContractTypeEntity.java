@@ -5,6 +5,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
 import java.util.Map;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,6 +20,7 @@ import org.hibernate.type.SqlTypes;
 @Getter @Setter
 @Builder
 @Entity
+@Table(name = "contract_type")
 public class ContractTypeEntity {
 
   @Id
