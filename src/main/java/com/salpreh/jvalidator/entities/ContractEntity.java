@@ -35,7 +35,7 @@ public class ContractEntity {
   @JdbcTypeCode(SqlTypes.JSON)
   private Map<String, Object> data;
 
-  @ManyToOne(cascade = {CascadeType.MERGE})
+  @ManyToOne(cascade = {CascadeType.REFRESH})
   @JoinColumn(name = "contract_type_id")
   private ContractTypeEntity contractType;
 }

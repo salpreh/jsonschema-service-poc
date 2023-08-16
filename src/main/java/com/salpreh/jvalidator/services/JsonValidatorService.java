@@ -21,7 +21,7 @@ public class JsonValidatorService {
 
   private final ObjectMapper objectMapper;
 
-  public Set<ValidationMessage> validateJson(Map<String, Object> schema, Map<String, Object> data) {
+  public Set<ValidationMessage> validateJsonData(Map<String, Object> schema, Map<String, Object> data) {
     JsonSchema jsonSchema;
     try {
       jsonSchema = loadSchema(schema);
