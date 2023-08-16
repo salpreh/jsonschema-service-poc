@@ -50,7 +50,6 @@ public class ContractService {
 
     ContractEntity updateEntity = modelMapper.map(updateCommand, ContractEntity.class);
     updateEntity.setId(id);
-    // TODO: Validate against schema
     updateEntity = contractRepository.save(updateEntity);
 
     return modelMapper.map(updateEntity, ContractDto.class);
