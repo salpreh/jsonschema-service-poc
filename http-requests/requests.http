@@ -1,0 +1,211 @@
+# Contract-Type
+
+### GET all
+GET {{baseUrl}}/contract-types?page=0&size=10
+
+### GET one
+GET {{baseUrl}}/contract-types/1
+
+### POST
+POST {{baseUrl}}/contract-types
+Content-Type: application/json
+
+{
+  "name": "CT 1",
+  "schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "name": "CT 1",
+    "description": "Contract Type 1",
+    "type": "object",
+    "properties": {
+      "contractType": {
+        "type": "array",
+        "description": "Contract Type",
+        "metaType": "select",
+        "items": {
+          "type": "string",
+          "enum": ["COMPANY", "PERSON"]
+        }
+      },
+      "signerName": {
+        "type": "string",
+        "description": "Signer Name",
+        "metaType": "input"
+      },
+      "signerEmail": {
+        "type": "string",
+        "description": "Signer Email",
+        "metaType": "input",
+        "format": "email"
+      }
+    },
+    "required": ["contractType", "signerName", "signerEmail"],
+    "if": {
+      "properties": {
+        "contractType": {
+          "const": ["COMPANY"]
+        }
+      }
+    },
+    "then": {
+      "properties": {
+        "companyName": {
+          "type": "string",
+          "description": "Company Name",
+          "metaType": "input"
+        },
+        "companyEmail": {
+          "type": "string",
+          "description": "Company Email",
+          "metaType": "input",
+          "format": "email"
+        }
+      },
+      "required": ["companyName"]
+    }
+  }
+}
+
+### PUT
+PUT {{baseUrl}}/contract-types/1
+Content-Type: application/json
+
+{
+  "name": "CT 1",
+  "schema": {
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "name": "CT 1",
+    "description": "Contract Type 1",
+    "type": "object",
+    "properties": {
+      "contractType": {
+        "type": "string",
+        "description": "Contract Type",
+        "metaType": "select",
+        "enum": ["COMPANY", "PERSON"]
+      },
+      "signerName": {
+        "type": "string",
+        "description": "Signer Name",
+        "metaType": "input"
+      },
+      "signerEmail": {
+        "type": "string",
+        "description": "Signer Email",
+        "metaType": "input",
+        "format": "email"
+      }
+    },
+    "required": ["contractType", "signerName", "signerEmail"],
+    "if": {
+      "properties": {
+        "contractType": {
+          "const": "COMPANY"
+        }
+      }
+    },
+    "then": {
+      "properties": {
+        "companyName": {
+          "type": "string",
+          "description": "Company Name",
+          "metaType": "input"
+        },
+        "companyEmail": {
+          "type": "string",
+          "description": "Company Email",
+          "metaType": "input",
+          "format": "email"
+        }
+      },
+      "required": ["companyName"]
+    }
+  }
+}
+
+### PUT (malformed schema)
+PUT {{baseUrl}}/contract-types/1
+Content-Type: application/json
+
+{
+  "name": "CT 1",
+  "schema": {
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "name": "CT 1",
+    "description": "Contract Type 1",
+    "type": "object",
+    "properties": ["someone"]
+  }
+}
+
+### DELETE
+DELETE {{baseUrl}}/contract-types/1
+
+# Contract
+
+### GET all
+GET {{baseUrl}}/contracts?page=0&size=10
+
+### GET one
+GET {{baseUrl}}/contracts/1
+
+### POST
+POST {{baseUrl}}/contracts
+Content-Type: application/json
+
+{
+  "contractTypeId": 1,
+  "validFrom": "2023-09-09T00:00:00.000Z",
+  "data": {
+    "contractType": "COMPANY",
+    "signerName": "Sam Bridges",
+    "signerEmail": "porter@bridges.com",
+    "companyEmail": "uca@bridges.com",
+    "companyName": "UCA"
+  }
+}
+
+### POST (2)
+POST {{baseUrl}}/contracts
+Content-Type: application/json
+
+{
+  "contractTypeId": 1,
+  "validFrom": "2023-09-09T00:00:00.000Z",
+  "data": {
+    "contractType": "PERSON",
+    "signerName": "Higgs",
+    "signerEmail": "higgs@demens.com"
+  }
+}
+
+### POST (invalid)
+POST {{baseUrl}}/contracts
+Content-Type: application/json
+
+{
+  "contractTypeId": 1,
+  "validFrom": "2023-09-09T00:00:00.000Z",
+  "data": {
+    "contractType": "COMPANY",
+    "signerName": "Fragile",
+    "signerEmail": "hello@fragileexp.com"
+  }
+}
+
+### PUT
+PUT {{baseUrl}}/contracts/1
+Content-Type: application/json
+
+{
+  "contractTypeId": 1,
+  "validFrom": "2023-09-09T00:00:00.000Z",
+  "data": {
+    "contractType": "PERSON",
+    "signerName": "Sam Bridges",
+    "signerEmail": "sam@bridges.com"
+  }
+}
+
+### DELETE
+DELETE {{baseUrl}}/contracts/1
