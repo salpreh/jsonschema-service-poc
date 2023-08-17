@@ -1,0 +1,10 @@
+{
+  "contractType": "COMPANY",
+  "signerName": "Me",
+  "agent": 1,
+  "signerEmail": "me@outlook.com",
+  "companyName": "mycomp",
+  "companyEmail": "cc@company.com",
+  "hasPartner": true,
+  "partner": 1
+}

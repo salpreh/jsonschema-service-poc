@@ -1,0 +1,111 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "description": "Contract Type 2",
+  "type": "object",
+  "properties": {
+    "contractType": {
+      "type": "string",
+      "description": "Contract Type",
+      "metaType": "select",
+      "enum": [
+        "COMPANY",
+        "PERSON"
+      ]
+    },
+    "agent": {
+      "type": "number",
+      "description": "Salesman agent",
+      "metaType": "selector",
+      "metadata": {
+        "path": "/sales-agent"
+      },
+      "metaValidations": {
+        "validationType": "ENTITY_ID",
+        "validationMetadata": {
+          "entityType": "SALES_AGENT"
+        }
+      }
+    },
+    "signerName": {
+      "type": "string",
+      "description": "Signer Name",
+      "metaType": "input"
+    },
+    "signerEmail": {
+      "type": "string",
+      "description": "Signer Email",
+      "metaType": "input",
+      "format": "email"
+    },
+    "hasPartner": {
+      "type": "boolean",
+      "description": "Has Partner",
+      "default": false,
+      "metaType": "checkbox"
+    }
+  },
+  "required": [
+    "contractType",
+    "signerName",
+    "signerEmail"
+  ],
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "contractType": {
+            "const": "COMPANY"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "companyName": {
+            "type": "string",
+            "description": "Company Name",
+            "metaType": "input"
+          },
+          "companyEmail": {
+            "type": "string",
+            "description": "Company Email",
+            "metaType": "input",
+            "format": "email"
+          }
+        },
+        "required": [
+          "companyName"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "hasPartner": {
+            "const": true
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "partner": {
+            "type": "number",
+            "description": "Partner",
+            "metaType": "selector",
+            "metadata": {
+              "path": "/partners"
+            },
+            "metaValidations": {
+              "validationType": "ENTITY_ID",
+              "validationMetadata": {
+                "entityType": "PARTNER"
+              }
+            }
+          }
+        },
+        "required": [
+          "partner"
+        ]
+      }
+    }
+  ]
+}
